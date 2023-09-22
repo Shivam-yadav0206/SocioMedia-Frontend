@@ -1,4 +1,5 @@
 import { useState } from "react";
+import constants from "../../constants";
 import {
   Box,
   Button,
@@ -64,7 +65,7 @@ const Form = () => {
     formData.append("picturePath", values.picture.name);
 
     const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
+      `${constants.API_URL2}/auth/register`,
       {
         method: "POST",
         body: formData,
@@ -79,7 +80,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    const loggedInResponse = await fetch(`${constants.API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
