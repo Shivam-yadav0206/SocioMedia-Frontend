@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import constants from "../constants";
+//import constants from "../constants";
 
 const UserImage = ({ image, size = "60px" }) => {
   return (
@@ -9,7 +9,7 @@ const UserImage = ({ image, size = "60px" }) => {
         width={size}
         height={size}
         alt="user"
-        src={`${constants.API_URL}/assets/${image}`}
+        src={`https://sociomedia-backend-eymg.onrender.com/assets/${image}`}
       />
     </Box>
   );

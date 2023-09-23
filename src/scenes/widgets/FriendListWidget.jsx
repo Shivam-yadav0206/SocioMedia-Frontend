@@ -4,7 +4,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "state";
-import constants from "../../constants";
+//import constants from "../../constants";
 
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const FriendListWidget = ({ userId }) => {
 
   const getFriends = async () => {
     const response = await fetch(
-      `${constants.API_URL}/users/${userId}/friends`,
+      `https://sociomedia-backend-eymg.onrender.com/users/${userId}/friends`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },

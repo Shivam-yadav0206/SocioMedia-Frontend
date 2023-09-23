@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
-import constants from "../constants";
+//import constants from "../constants";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
   const patchFriend = async () => {
     const response = await fetch(
-      `${constants.API_URL}/users/${_id}/${friendId}`,
+      `https://sociomedia-backend-eymg.onrender.com/users/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

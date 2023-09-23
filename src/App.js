@@ -7,7 +7,6 @@ import { themeSettings } from "./theme";
 import HomePage from './scenes/homePage';
 import LoginPage from './scenes/loginPage';
 import ProfilePage from './scenes/profilePage';
-//import state from 'state';
 
 function App() {
   const mode = useSelector((state)=>state.mode);
