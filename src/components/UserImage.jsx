@@ -9,7 +9,7 @@ const UserImage = ({ image, size = "60px" }) => {
         width={size}
         height={size}
         alt="user"
-        src={`https://sociomedia-backend-eymg.onrender.com/assets/${image}`}
+        src={`https://socio-media-backend.vercel.app/assets/${image}`}
       />
     </Box>
   );

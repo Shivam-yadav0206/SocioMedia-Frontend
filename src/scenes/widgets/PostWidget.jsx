@@ -4,14 +4,26 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Divider,
+  IconButton,
+  Typography,
+  useTheme,
+  Avatar,
+  Grid,
+  TextField,
+} from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import FlexBetween from "components/FlexBetween";
 import Friend from "components/Friend";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "state";
-//import constants from "../../constants";
+import DeleteIcon from '@mui/icons-material/Delete'
+
+
 const PostWidget = ({
   postId,
   postUserId,
@@ -23,26 +35,55 @@ const PostWidget = ({
   likes,
   comments,
 }) => {
+  const [commentText, setCommentText] = useState("");
   const [isComments, setIsComments] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
+  const userInfo = useSelector((state) => state.userInfo);
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
-
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    const response = await fetch(`https://sociomedia-backend-eymg.onrender.com/posts/${postId}/like`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId: loggedInUserId }),
-    });
+    const response = await fetch(
+      `https://socio-media-backend.vercel.app/posts/${postId}/like`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId }),
+      }
+    );
+    const updatedPost = await response.json();
+    dispatch(setPost({ post: updatedPost }));
+  };
+
+  const handleCommentChange = (event) => {
+    setCommentText(event.target.value);
+  };
+
+  const patchComment = async () => {
+    const response = await fetch(
+      `https://socio-media-backend.vercel.app/posts/${postId}/comment`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: loggedInUserId,
+          name: userInfo.name, // Assuming fullName is an object
+          comment: commentText, // Assuming commentText is an object
+          commentPicture: userInfo.displayPicture, // Assuming userProfile is an object
+        }),
+      }
+    );
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
   };
@@ -64,7 +105,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`https://sociomedia-backend-eymg.onrender.com/assets/${picturePath}`}
+          src={`https://socio-media-backend.vercel.app/assets/${picturePath}`}
         />
       )}
       <FlexBetween mt="0.25rem">
@@ -102,6 +143,29 @@ const PostWidget = ({
               </Typography>
             </Box>
           ))}
+
+          <Grid container wrap="nowrap" spacing={0}>
+            <Grid item>
+              <Avatar
+                alt="Remy Sharp"
+                src={`https://socio-media-backend.vercel.app/assets/${userPicturePath}`}
+              />
+            </Grid>
+            <TextField
+              id="outlined-basic"
+              label="Add Comments"
+              variant="outlined"
+              sx={{ marginLeft: "10px", width: "inherit" }}
+              onChange={handleCommentChange}
+            />
+            <IconButton onClick={patchComment}>
+              <SendIcon />
+            </IconButton>
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Grid>
+
           <Divider />
         </Box>
       )}

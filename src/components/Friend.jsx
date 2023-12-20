@@ -24,7 +24,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 
   const patchFriend = async () => {
     const response = await fetch(
-      `https://sociomedia-backend-eymg.onrender.com/users/${_id}/${friendId}`,
+      `https://socio-media-backend.vercel.app/users/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

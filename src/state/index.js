@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   token: null,
   posts: [],
+  userInfo: {},
 };
 
 export const authSlice = createSlice({
@@ -18,11 +19,12 @@ export const authSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
+    setUserInfo: (state, action) => {
+      state.userInfo = action.payload;
+    },
     setlogout: (state) => {
       state.user = null;
       state.token = null;
-      // const navigate = useNavigate();
-      // navigate('/');
     },
     setFriends: (state, action) => {
       if (state.user) {
@@ -44,6 +46,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setMode, setLogin, setlogout, setFriends, setPosts, setPost } =
+export const { setMode, setLogin, setlogout, setFriends, setPosts, setPost, setUserInfo } =
   authSlice.actions;
 export default authSlice.reducer;
