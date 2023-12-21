@@ -63,19 +63,22 @@ const Form = () => {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", values.picture.name);
+    try {
+      const savedUserResponse = await fetch(
+        "https://sociomedia-backend-eymg.onrender.com/auth/register",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const savedUser = await savedUserResponse.json();
+      onSubmitProps.resetForm();
 
-    const savedUserResponse = await fetch(
-      `https://socio-media-backend.vercel.app/auth/register`,
-      {
-        method: "POST",
-        body: formData,
+      if (savedUser) {
+        setPageType("login");
       }
-    );
-    const savedUser = await savedUserResponse.json();
-    onSubmitProps.resetForm();
-
-    if (savedUser) {
-      setPageType("login");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -238,8 +241,15 @@ const Form = () => {
 
             {/* BUTTONS */}
             <Box>
-              <Typography fontWeight="500" variant="body1"  sx={{marginTop:'5px', textAlign:'center',marginBottom:'0px'}}>
-                Test Email: sy1111@gmail.com  Test Password: 123456 
+              <Typography
+                fontWeight="500"
+                variant="body1"
+                sx={{
+                  marginTop: "5px",
+                  textAlign: "center",
+                  marginBottom: "0px",
+                }}>
+                Test Email: sy1111@gmail.com Test Password: 123456
               </Typography>
               <Button
                 fullWidth

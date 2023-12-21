@@ -48,7 +48,7 @@ const MyPostWidget = ({ picturePath }) => {
     }
 
     const response = await fetch(
-      `https://socio-media-backend.vercel.app/posts`,
+      `https://sociomedia-backend-eymg.onrender.com/posts`,
       {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
